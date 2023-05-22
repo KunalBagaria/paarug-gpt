@@ -1,5 +1,6 @@
 import { Client, Events, GatewayIntentBits } from 'discord.js';
 import { DISCORD_API_KEY } from "./config";
+import { Message, makeRequest } from './api';
 
 const client = new Client({ intents: [
   GatewayIntentBits.Guilds,
@@ -13,9 +14,24 @@ client.once(Events.ClientReady, c => {
 });
 
 client.on(Events.MessageCreate, async (message) => {
-  if (message.content === 'ping') {
-    await message.reply('Pong!');
-  }
+  if (message.author.bot) return;
+
+  // typing indicator
+  message.channel.sendTyping();
+
+  // Get last 5 messages
+  const messages = await message.channel.messages.fetch({ limit: 5 });
+
+  const data = messages.reduce<Message[]>((acc, msg) => {
+    acc.unshift({
+      role: msg.author.bot ? 'assistant' : 'user',
+      content: msg.content,
+    });
+    return acc;
+  }, []);
+
+  const response = await makeRequest(data);
+  message.channel.send(response.content);
 });
 
 client.login(DISCORD_API_KEY);
