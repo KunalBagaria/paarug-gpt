@@ -19,8 +19,8 @@ client.on(Events.MessageCreate, async (message) => {
   // typing indicator
   message.channel.sendTyping();
 
-  // Get last 5 messages
-  const messages = await message.channel.messages.fetch({ limit: 5 });
+  // Get last 3 messages
+  const messages = await message.channel.messages.fetch({ limit: 3 });
 
   const data = messages.reduce<Message[]>((acc, msg) => {
     acc.unshift({
