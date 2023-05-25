@@ -14,13 +14,25 @@ client.once(Events.ClientReady, c => {
 });
 
 client.on(Events.MessageCreate, async (message) => {
+  let responseReturned = false;
+
   if (message.author.bot) return;
 
   // typing indicator
-  message.channel.sendTyping();
+  await message.channel.sendTyping();
 
   // Get last 3 messages
   const messages = await message.channel.messages.fetch({ limit: 3 });
+
+  function sendTypingIndivator() {
+    setTimeout(() => {
+      // If response is not returned, send typing indicator again
+      if (!responseReturned) message.channel.sendTyping();
+      sendTypingIndivator();
+    }, 10500);
+  }
+
+  sendTypingIndivator();
 
   const data = messages.reduce<Message[]>((acc, msg) => {
     acc.unshift({
@@ -31,6 +43,12 @@ client.on(Events.MessageCreate, async (message) => {
   }, []);
 
   const response = await makeRequest(data);
+  responseReturned = true;
+
+  // trim response.content to 2000 characters or less
+  if (response.content.length > 2000) {
+    response.content = response.content.slice(0, 2000);
+  }
   message.channel.send(response.content);
 });
 
