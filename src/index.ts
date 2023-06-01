@@ -1,4 +1,5 @@
 import { Client, Events, GatewayIntentBits, Partials  } from 'discord.js';
+import { getLatestEvents } from './events';
 import { DISCORD_API_KEY } from "./config";
 import { Message, makeRequest } from './api';
 import { CalendarEvents } from './types';
@@ -16,6 +17,25 @@ const superteamEvents: CalendarEvents = {
   lastUpdated: new Date(),
 };
 
+async function getEvents() {
+  // get events if last updated is more than 12 hours ago
+  if (
+    new Date().getTime() - superteamEvents.lastUpdated.getTime() > 12 * 60 * 60 * 1000 ||
+    superteamEvents.events === ""
+  ) {
+    const latestEvents = await getLatestEvents();
+    if (latestEvents instanceof Error) {
+      console.error(latestEvents);
+      return "Error while fetching events";
+    }
+    superteamEvents.events = latestEvents.events;
+    superteamEvents.lastUpdated = latestEvents.lastUpdated;
+    return latestEvents.events;
+  } else {
+    return superteamEvents.events;
+  }
+}
+
 client.once(Events.ClientReady, c => {
 	console.log(`Ready! Logged in as ${c.user.tag}`);
 });
@@ -28,6 +48,9 @@ client.on(Events.MessageCreate, async (message) => {
 
   // typing indicator
   await message.channel.sendTyping();
+
+  // Get latest events
+  const calendarEvents = await getEvents();
 
   // Get last 3 messages
   const messages = await message.channel.messages.fetch({ limit: 3 });
@@ -53,7 +76,7 @@ client.on(Events.MessageCreate, async (message) => {
   let response;
 
   try {
-    response = await makeRequest(data);
+    response = await makeRequest(data, calendarEvents);
     responseReturned = true;
   } catch (e) {
     console.error(e);

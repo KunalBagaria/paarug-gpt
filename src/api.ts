@@ -8,9 +8,9 @@ interface Message {
   content: string
 }
 
-async function makeRequest(messages: Message[]) {
+async function makeRequest(messages: Message[], events: string) {
   const data = [
-    { role: "user", content: DefaultContext },
+    { role: "user", content: DefaultContext(events) },
     { role: "assistant", content: "Affirmed."},
     ...messages
   ]
