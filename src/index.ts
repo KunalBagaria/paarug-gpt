@@ -1,4 +1,4 @@
-import { Client, Events, GatewayIntentBits } from 'discord.js';
+import { Client, Events, GatewayIntentBits, Partials  } from 'discord.js';
 import { DISCORD_API_KEY } from "./config";
 import { Message, makeRequest } from './api';
 import { CalendarEvents } from './types';
@@ -8,7 +8,8 @@ const client = new Client({ intents: [
   GatewayIntentBits.GuildMessages,
   GatewayIntentBits.DirectMessages,
   GatewayIntentBits.MessageContent,
-]});
+], partials: [Partials.Message, Partials.Channel, Partials.Reaction]
+});
 
 const superteamEvents: CalendarEvents = {
   events: "",
@@ -20,6 +21,7 @@ client.once(Events.ClientReady, c => {
 });
 
 client.on(Events.MessageCreate, async (message) => {
+  if (message.partial) return;
   let responseReturned = false;
 
   if (message.author.bot) return;
