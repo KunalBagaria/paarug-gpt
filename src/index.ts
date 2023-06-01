@@ -83,7 +83,6 @@ client.on(Events.MessageCreate, async (message) => {
     responseReturned = true;
     message.reply('Something went wrong, please contact: Kunal Bagaria#0001');
   }
-
   // trim response.content to 2000 characters or less
   if (response.content.length > 2000) {
     response.content = response.content.slice(0, 2000);
