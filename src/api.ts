@@ -26,7 +26,6 @@ async function makeRequest(messages: Message[]) {
       }
     }
   );
-
   return response.data.choices[0].message;
 }
 

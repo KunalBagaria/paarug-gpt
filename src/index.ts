@@ -1,6 +1,7 @@
 import { Client, Events, GatewayIntentBits } from 'discord.js';
 import { DISCORD_API_KEY } from "./config";
 import { Message, makeRequest } from './api';
+import { CalendarEvents } from './types';
 
 const client = new Client({ intents: [
   GatewayIntentBits.Guilds,
@@ -8,6 +9,11 @@ const client = new Client({ intents: [
   GatewayIntentBits.DirectMessages,
   GatewayIntentBits.MessageContent,
 ]});
+
+const superteamEvents: CalendarEvents = {
+  events: "",
+  lastUpdated: new Date(),
+};
 
 client.once(Events.ClientReady, c => {
 	console.log(`Ready! Logged in as ${c.user.tag}`);
@@ -42,14 +48,22 @@ client.on(Events.MessageCreate, async (message) => {
     return acc;
   }, []);
 
-  const response = await makeRequest(data);
-  responseReturned = true;
+  let response;
+
+  try {
+    response = await makeRequest(data);
+    responseReturned = true;
+  } catch (e) {
+    console.error(e);
+    responseReturned = true;
+    message.reply('Something went wrong, please contact: Kunal Bagaria#0001');
+  }
 
   // trim response.content to 2000 characters or less
   if (response.content.length > 2000) {
     response.content = response.content.slice(0, 2000);
   }
-  message.channel.send(response.content);
+  message.reply(response.content);
 });
 
 client.login(DISCORD_API_KEY);
