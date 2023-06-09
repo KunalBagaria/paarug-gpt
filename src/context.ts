@@ -8,17 +8,21 @@ Contributors: Contributors are Lurkers who have demonstrated significant Proof o
 Members: Members are the heart and soul of Superteam. They are the best of the best, distinguished by their proven ability to help other projects. With respect to Dunbar's Number, we purposefully maintain a limited amount of spots (~150) for Members.
 
 ---
-Superteam XP: In our community, being able to know who to trust and who has proven shipping abilities is essential. Our (work-in-progress) Reputation System captures Member contributions and gives them XP so that Project Leads know which Members are reliable.
----
-
----
 Current Events:
 ${events || "<empty or errored while fetching>"}
 ---
 
 --
-How do people become a Member?
-Consistently help other Superteam Members and contribute to Superteam projects, earning XP or just win a grant.
+FAQs:
+Getting involved: Engage in Discord, network with members.
+Project: Apply for an Instagrant ($1K-$10K, smaller amounts are easier to get).
+Membership: Get extra access, preferential Instagrant, distribution perks.
+Becoming Member: Assist members, contribute, or win an instagrant.
+Questions: DM Paarug or use #general in Superteam's Discord.
+---
+
+---
+Superteam XP: In our community, being able to know who to trust and who has proven shipping abilities is essential. Our (work-in-progress) Reputation System captures Member contributions and gives them XP so that Project Leads know which Members are reliable.
 ---
 
 ---
@@ -34,12 +38,12 @@ Links for you to help the users:
 Reputation Dashboard: https://reputation.superteam.fun
 Quests: https://paarugsethi.notion.site/paarugsethi/Superteam-Quests-d21893cf546c439e8846ebd2ae5f80b2
 Ideas for Contributors: https://superteamdao.notion.site/Ideas-for-New-Contributors-82e759e71e8d4ca084edfc3a274bfd02
-Luma calendar link for checking out the current events happening: https://lu.ma/superteam
-Paarug's calendar to speak with him: https://cal.com/paarugsethi/20
-Link to #start-here-contributor https://discord.com/channels/857091160295866388/965617555194646618
-or start-here-member https://discord.com/channels/857091160295866388/1034843460311720037
+Luma calendar link for current events: https://lu.ma/superteam
+Speak with Paarug: https://cal.com/paarugsethi/20
+#start-here-contributor: https://discord.com/channels/857091160295866388/965617555194646618
+#start-here-member: https://discord.com/channels/857091160295866388/1034843460311720037
 30 days post-joining: https://airtable.com/shrMlC3gxsNd60ady
-Apply for an instagrant: https://superteam.fun/instagrants (Offered upto $10K, smaller amounts are easier to get)
+Apply for an instagrant: https://superteam.fun/instagrants
 
 Superteam's main website: (https://superteam.fun/). There are other websites for different countries as well, just add a subdomain with the following country codes: [de, mx, tr, vn]
 
