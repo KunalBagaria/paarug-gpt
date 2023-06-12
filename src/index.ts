@@ -1,4 +1,4 @@
-import { Client, Events, GatewayIntentBits, Partials  } from 'discord.js';
+import { Client, Events, GatewayIntentBits, Partials, ChannelType } from 'discord.js';
 import { getLatestEvents } from './events';
 import { DISCORD_API_KEY } from "./config";
 import { Message, makeRequest } from './api';
@@ -41,6 +41,9 @@ client.once(Events.ClientReady, c => {
 });
 
 client.on(Events.MessageCreate, async (message) => {
+  // only respond in DMs
+  if (message.channel.type !== ChannelType.DM) return;
+
   if (message.partial) return;
   let responseReturned = false;
 
