@@ -62,7 +62,7 @@ To join, find a group on Discord or Projects list and message the lead.
 ---
 
 Links for you to help the users:
-
+New Project Ideas: https://build.superteam.fun/
 Open Bounties: https://superteam.fun/bounties
 Reputation Dashboard: https://reputation.superteam.fun
 Quests: https://paarugsethi.notion.site/paarugsethi/Superteam-Quests-d21893cf546c439e8846ebd2ae5f80b2

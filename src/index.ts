@@ -1,8 +1,9 @@
-import { Client, Events, GatewayIntentBits, Partials, ChannelType } from 'discord.js';
+import { Client, Events, GatewayIntentBits, Partials, ChannelType, TextChannel } from 'discord.js';
 import { getLatestEvents } from './events';
 import { DISCORD_API_KEY } from "./config";
 import { Message, makeRequest } from './api';
 import { CalendarEvents } from './types';
+import { getButtons } from './buttons';
 
 const client = new Client({ intents: [
   GatewayIntentBits.Guilds,
@@ -84,13 +85,36 @@ client.on(Events.MessageCreate, async (message) => {
   } catch (e) {
     console.error(e);
     responseReturned = true;
-    message.reply('Something went wrong, please contact: Kunal Bagaria#0001');
+    message.reply('Something went wrong, please contact: @kunalbagaria');
   }
   // trim response.content to 2000 characters or less
   if (response.content.length > 2000) {
     response.content = response.content.slice(0, 2000);
   }
-  message.reply(response.content);
+  const row = getButtons();
+
+  message.reply({
+    content: response.content,
+    components: [row as any]
+  });
+
+});
+
+client.on('interactionCreate', async (interaction) => {
+  if (!interaction.isButton()) return;
+  const user = interaction.user;
+
+  // Handle the button click
+  if (interaction.customId === 'good') {
+    await interaction.reply({ content: 'Thanks for your feedback!', ephemeral: true });
+  } else if (interaction.customId === 'bad') {
+    await interaction.reply({ content: 'Thanks for your feedback, we will work on improving.', ephemeral: true });
+    const channel = await client.channels.fetch('1117781242843246593') as TextChannel;
+    await channel.send({
+      content: `Bad response to user: (${user.tag})'s prompt: \n${"```" + interaction.message.content + "```"}`
+    });
+  }
+
 });
 
 client.login(DISCORD_API_KEY);
