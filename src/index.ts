@@ -42,62 +42,60 @@ client.once(Events.ClientReady, c => {
 });
 
 client.on(Events.MessageCreate, async (message) => {
-  // only respond in DMs
-  if (message.channel.type !== ChannelType.DM) return;
+  if (message.channel.type === ChannelType.DM) {
+    if (message.partial) return;
+    let responseReturned = false;
 
-  if (message.partial) return;
-  let responseReturned = false;
+    if (message.author.bot) return;
 
-  if (message.author.bot) return;
+    // typing indicator
+    await message.channel.sendTyping();
 
-  // typing indicator
-  await message.channel.sendTyping();
+    // Get latest events
+    const calendarEvents = await getEvents();
 
-  // Get latest events
-  const calendarEvents = await getEvents();
+    // Get last 3 messages
+    const messages = await message.channel.messages.fetch({ limit: 3 });
 
-  // Get last 3 messages
-  const messages = await message.channel.messages.fetch({ limit: 3 });
+    function sendTypingIndivator() {
+      setTimeout(() => {
+        // If response is not returned, send typing indicator again
+        if (!responseReturned) message.channel.sendTyping();
+        sendTypingIndivator();
+      }, 10500);
+    }
 
-  function sendTypingIndivator() {
-    setTimeout(() => {
-      // If response is not returned, send typing indicator again
-      if (!responseReturned) message.channel.sendTyping();
-      sendTypingIndivator();
-    }, 10500);
-  }
+    sendTypingIndivator();
 
-  sendTypingIndivator();
+    const data = messages.reduce<Message[]>((acc, msg) => {
+      acc.unshift({
+        role: msg.author.bot ? 'assistant' : 'user',
+        content: msg.content,
+      });
+      return acc;
+    }, []);
 
-  const data = messages.reduce<Message[]>((acc, msg) => {
-    acc.unshift({
-      role: msg.author.bot ? 'assistant' : 'user',
-      content: msg.content,
+    let response;
+
+    try {
+      response = await makeRequest(data, calendarEvents);
+      responseReturned = true;
+    } catch (e) {
+      console.error(e);
+      responseReturned = true;
+      message.reply('Something went wrong, please contact: @kunalbagaria');
+    }
+    // trim response.content to 2000 characters or less
+    if (response.content.length > 2000) {
+      response.content = response.content.slice(0, 2000);
+    }
+    const row = getButtons();
+
+    message.reply({
+      content: response.content,
+      components: [row as any]
     });
-    return acc;
-  }, []);
-
-  let response;
-
-  try {
-    response = await makeRequest(data, calendarEvents);
-    responseReturned = true;
-  } catch (e) {
-    console.error(e);
-    responseReturned = true;
-    message.reply('Something went wrong, please contact: @kunalbagaria');
   }
-  // trim response.content to 2000 characters or less
-  if (response.content.length > 2000) {
-    response.content = response.content.slice(0, 2000);
-  }
-  const row = getButtons();
-
-  message.reply({
-    content: response.content,
-    components: [row as any]
-  });
-
 });
 
 client.on('interactionCreate', async (interaction) => {
