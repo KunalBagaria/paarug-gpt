@@ -109,7 +109,7 @@ client.once(Events.ClientReady, (c) => {
 client.on(Events.MessageCreate, async (message) => {
   if (message.partial) return;
   // only respond in DMs
-  if (message.channel.type !== ChannelType.DM) return;
+  // if (message.channel.type !== ChannelType.DM) return;
   await handleMessage(message);
 });
 

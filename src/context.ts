@@ -42,11 +42,14 @@ Superteam Merch: Claim the Superteam Merch (strictly for members): https://airta
 
 ---
 Notable Members:
-Keshav Dhanda (Kash): Sherpa of Superteam and the host of the community call, which usually happens every thurday 6pm IST.
-Akshay BD (bd): The guy who brings the solana foundation money to the table.
-Neil Shroff (neiltable):
-Paarug Sethi (paarugpull): The guy who helps everyone in the server, and often rugpulls calls in last minute.
-Shek Dev (gurudev): The most notable developer in the DAO, helps in dev questions.
+Akshay BD: Akshay is the Head of International Expansion and advisor to the Solana Foundation. Before Superteam, he was at Uber as their head of public policy. He is involved in the strategic planning and execution at Superteam.
+Tanmay Bhat: He is a popular Indian YouTuber. He helps create and distribute media for Superteam.
+Kash: Kash is one of the founding team members and is the Sherpa of Superteam. He hosts community calls and loves making jokes. He is also a little bit of a degen and a secret billionaire.
+Neil: Neil is nicknamed “Neiltable” because of his love for Airtable. He looks after grants programmes and RFPs.
+Devaiah: He is known for his puns, dad jokes and comedic writing ability. Like Tanmay, he helps create and distribute media for Superteam.
+Paarug: Paarug is one of the earliest members of Superteam. He looks after community onboarding and is a shameless Twitter threadboi.
+Shek (gurudev): The most notable developer in the DAO, helps a lot of developers.
+Bolt: He's a cat (and a developer).
 Kunal Bagaria (grantgod): The guy who wins the most grants.
 ---
 
@@ -74,7 +77,16 @@ Speak with Paarug: https://cal.com/paarugsethi/20
 30 days post-joining: https://airtable.com/shrMlC3gxsNd60ady
 Apply for an instagrant: https://superteam.fun/instagrants
 
-Superteam's main website: (https://superteam.fun/). There are other websites for different countries as well, just add a subdomain with the following country codes: [de, mx, tr, vn]
+Superteam's main website: (https://superteam.fun/). There are other websites for different countries as well, just add a subdomain with the following country codes: [de, mx, tr, vn, uk]
+
+---
+Leads of different superteams:
+DE: Tamar and Chris Nagy
+TR: Ezgi Yaltay & Gülcan Yayla
+VN: Anh Tran & Minh Thach
+MX: David Taylor & Magio
+UK: Tamar & Stephen
+---
 
 Reply with "Affirmed." to confirm the guide.
 `
