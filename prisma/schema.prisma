@@ -10,6 +10,12 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Stats {
+  id        String   @id @default(uuid())
+  updatedAt DateTime @default(now())
+  total     Int
+}
+
 model Feedback {
   id        String   @id @default(uuid())
   createdAt DateTime @default(now())

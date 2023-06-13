@@ -12,7 +12,7 @@ import { DISCORD_API_KEY } from "./config";
 import { Message, makeRequest } from "./api";
 import { CalendarEvents } from "./types";
 import { getButtons } from "./buttons";
-import { createFeedback } from "./feedback";
+import { createFeedback, incrementTotal } from "./feedback";
 
 const client = new Client({
   intents: [
@@ -112,6 +112,7 @@ client.on(Events.MessageCreate, async (message) => {
   // only respond in DMs
   if (message.channel.type !== ChannelType.DM) return;
   await handleMessage(message);
+  await incrementTotal();
 });
 
 client.on("interactionCreate", async (interaction) => {
