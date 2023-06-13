@@ -3,15 +3,16 @@ import {
   Events,
   GatewayIntentBits,
   Partials,
-  ChannelType,
   TextChannel,
   Message as MessageInterface,
+  ChannelType,
 } from "discord.js";
 import { getLatestEvents } from "./events";
 import { DISCORD_API_KEY } from "./config";
 import { Message, makeRequest } from "./api";
 import { CalendarEvents } from "./types";
 import { getButtons } from "./buttons";
+import { createFeedback } from "./feedback";
 
 const client = new Client({
   intents: [
@@ -114,28 +115,33 @@ client.on(Events.MessageCreate, async (message) => {
 });
 
 client.on("interactionCreate", async (interaction) => {
-  if (!interaction.isButton()) return;
-  const user = interaction.user;
-
-  // Handle the button click
-  if (interaction.customId === "good") {
-    await interaction.reply({
-      content: "Thanks for your feedback!",
-      ephemeral: true,
-    });
-  } else if (interaction.customId === "bad") {
-    await interaction.reply({
-      content: "Thanks for your feedback, we will work on improving.",
-      ephemeral: true,
-    });
-    const channel = (await client.channels.fetch(
-      "1117781242843246593"
-    )) as TextChannel;
-    await channel.send({
-      content: `Bad response to user: (${user.tag})'s prompt: \n${
-        "```" + interaction.message.content + "```"
-      }`,
-    });
+  try {
+    if (!interaction.isButton()) return;
+    const user = interaction.user;
+    // Handle the button click
+    if (interaction.customId === "good") {
+      await interaction.reply({
+        content: "Thanks for your feedback!",
+        ephemeral: true,
+      });
+      await createFeedback(true);
+    } else if (interaction.customId === "bad") {
+      await interaction.reply({
+        content: "Thanks for your feedback, we will work on improving.",
+        ephemeral: true,
+      });
+      await createFeedback(false);
+      const channel = (await client.channels.fetch(
+        "1117781242843246593"
+      )) as TextChannel;
+      await channel.send({
+        content: `Bad response to user: (${user.tag})'s prompt: \n${
+          "```" + interaction.message.content + "```"
+        }`,
+      });
+    }
+  } catch (e) {
+    console.error(e);
   }
 });
 
