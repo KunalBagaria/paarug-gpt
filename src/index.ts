@@ -108,6 +108,7 @@ client.once(Events.ClientReady, (c) => {
 });
 
 client.on(Events.MessageCreate, async (message) => {
+  if (message.author.bot) return;
   if (message.partial) return;
   // only respond in DMs
   if (message.channel.type !== ChannelType.DM) return;
