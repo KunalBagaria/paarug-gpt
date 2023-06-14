@@ -128,8 +128,10 @@ client.on("interactionCreate", async (interaction) => {
       });
       await createFeedback(true);
     } else if (interaction.customId === "bad") {
+      const DMButton = getDMButton();
       await interaction.reply({
         content: "Thanks for your feedback, we will work on improving.",
+        components: [DMButton as any],
         ephemeral: true,
       });
       await createFeedback(false);
@@ -139,8 +141,7 @@ client.on("interactionCreate", async (interaction) => {
       await channel.send({
         content: `Bad response to user: (${user.tag})'s prompt: \n${
           "```" + interaction.message.content + "```"
-        }`,
-        components: [getDMButton() as any],
+        }`
       });
     }
   } catch (e) {
