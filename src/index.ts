@@ -11,7 +11,7 @@ import { getLatestEvents } from "./events";
 import { DISCORD_API_KEY } from "./config";
 import { Message, makeRequest } from "./api";
 import { CalendarEvents } from "./types";
-import { getButtons } from "./buttons";
+import { getButtons, getDMButton } from "./buttons";
 import { createFeedback, incrementTotal } from "./feedback";
 
 const client = new Client({
@@ -140,6 +140,7 @@ client.on("interactionCreate", async (interaction) => {
         content: `Bad response to user: (${user.tag})'s prompt: \n${
           "```" + interaction.message.content + "```"
         }`,
+        components: [getDMButton() as any],
       });
     }
   } catch (e) {

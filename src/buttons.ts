@@ -19,4 +19,14 @@ function getButtons() {
   return row;
 }
 
-export { getButtons };
+function getDMButton() {
+  const dm = new ButtonBuilder()
+    .setURL("https://twitter.com/paarugsethi")
+    .setLabel("DM the real Paarug")
+    .setStyle(ButtonStyle.Primary)
+    .setEmoji('📬');
+  const row = new ActionRowBuilder().addComponents(dm);
+  return row;
+}
+
+export { getButtons, getDMButton };
